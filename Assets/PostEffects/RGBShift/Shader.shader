@@ -1,7 +1,8 @@
 ﻿Shader "Custom/Shader" {
 	Properties {
 		_MainTex ("MainTex", 2D) = "" {}
-		_Amount ("Amount", Range(0,0.1)) = 0.005
+		_Amount ("Amount", Range(0, 0.1)) = 0.005
+		_Speed ("Speed", Range(0, 20)) = 10
 	}
 
 
@@ -15,16 +16,21 @@
 
 			sampler2D _MainTex;
 			float _Amount;
+			float _Speed;
 
 
-			fixed4 frag (v2f_img i): COLOR
-			{
-				fixed2 offset = _Amount * fixed2(cos(_Time.y), sin(_Time.y));
-				fixed4 cr = tex2D(_MainTex, i.uv + offset);
-				fixed4 cb = tex2D(_MainTex, i.uv - offset);
-				fixed4 cga = tex2D(_MainTex, i.uv);
-				fixed4 c = fixed4(cr.r, cga.g, cb.b, cga.a);
-				return c;
+			half4 frag (v2f_img img): COLOR {
+				// ずらす方向
+				float speed = _Time.y * _Speed / 2.0;
+				// ずらす位置
+				half2 offset = _Amount * half2(cos(speed), sin(speed));
+
+				// rgb別にずらしたカラーを生成
+				half4 cr = tex2D(_MainTex, img.uv + offset);
+				half4 cb = tex2D(_MainTex, img.uv - offset);
+				half4 cga = tex2D(_MainTex, img.uv);
+
+				return half4(cr.r, cga.g, cb.b, cga.a);
 			}
 			ENDCG
 		}

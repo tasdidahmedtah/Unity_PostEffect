@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LinesEffect : MonoBehaviour {
-
-
 	public bool on = false;
 
 	[Range(400, 2000)]

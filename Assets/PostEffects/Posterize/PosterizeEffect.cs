@@ -5,8 +5,8 @@ public class PosterizeEffect : MonoBehaviour {
 
 	public bool on = false;
 
-	[Range(1, 10)]
-	public float levels = 4f;
+	[Range(2, 255)]
+	public int level = 4;
 
 	public Material material;
 
@@ -28,7 +28,7 @@ public class PosterizeEffect : MonoBehaviour {
 	{
 		if(on)
 		{
-			material.SetFloat("_Levels", levels);
+			material.SetFloat("_Level", level);
 		}
 	}
 }

@@ -2,19 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RGBShiftEffect : MonoBehaviour {
-
-
+public class KaleidoscopeEffect : MonoBehaviour {
 	public bool on = false;
 
-	[Range(0f, 0.1f)]
-	public float amount = 0.05f;
-
-	[Range(0f, 10f)]
-	public float speed = 5f;
+	// [Range(0.1f, 1f)]
+	// public float scale = 0.8f;
 
 	public Material material;
-
 
 
 	void OnRenderImage(RenderTexture src, RenderTexture dest)
@@ -34,8 +28,7 @@ public class RGBShiftEffect : MonoBehaviour {
 	{
 		if(on)
 		{
-			material.SetFloat("_Amount", amount);
-			material.SetFloat("_Speed", speed);
+			// material.SetFloat("_Scale", scale);
 		}
 	}
 }

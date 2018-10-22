@@ -1,7 +1,7 @@
 ﻿Shader "Custom/Shader" {
 	Properties {
-		_MainTex ("MainTex", 2D) = "" {}
-		_Side ("Side", Int) = 0
+		_MainTex ("Texture", 2D) = "" {}
+		_Side ("Side", int) = 0
 	}
 
 
@@ -12,23 +12,30 @@
 			#pragma vertex vert_img
 			#pragma fragment frag
 
+
 			sampler2D _MainTex;
 			int _Side;
 
-			fixed4 frag(v2f_img i): COLOR
-			{
+
+			half4 frag(v2f_img img): COLOR {
+				// 折り返し基準を超えたら反転したuv座標をセット
 				if(_Side == 0){
-					if(0.5 < i.uv.x){ i.uv.x = 1.0 - i.uv.x;}
+					// 左半分
+					if(0.5 < img.uv.x){ img.uv.x = 1.0 - img.uv.x;}
 				} else if(_Side == 1) {
-					if(0.5 > i.uv.x){ i.uv.x = 1.0 - i.uv.x;}
+					// 右半分
+					if(0.5 > img.uv.x){ img.uv.x = 1.0 - img.uv.x;}
+
 				} else if(_Side == 2) {
-					if(0.5 > i.uv.y){ i.uv.y = 1.0 - i.uv.y;}
+					// 上半分
+					if(0.5 > img.uv.y){ img.uv.y = 1.0 - img.uv.y;}
+
 				} else {
-					if(0.5 < i.uv.y){ i.uv.y = 1.0 - i.uv.y;}
+					// 下半分
+					if(0.5 < img.uv.y){ img.uv.y = 1.0 - img.uv.y;}
 				}
 
-				fixed4 c = tex2D(_MainTex, i.uv);
-				return c;
+				return tex2D(_MainTex, img.uv);
 			}
 			ENDCG
 		}

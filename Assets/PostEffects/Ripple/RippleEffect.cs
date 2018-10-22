@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WobbleEffect : MonoBehaviour {
+public class RippleEffect : MonoBehaviour {
 
 	public bool on = false;
 
@@ -9,7 +9,10 @@ public class WobbleEffect : MonoBehaviour {
 	public float strength = 0.01f;
 
 	[Range(1, 50)]
-	public int size = 10;
+	public int amount = 10;
+
+	[Range(0f, 20f)]
+	public float speed = 10f;
 
 	public Material material;
 
@@ -32,7 +35,8 @@ public class WobbleEffect : MonoBehaviour {
 		if(on)
 		{
 			material.SetFloat("_Strength", strength);
-			material.SetInt("_Size", size);
+			material.SetInt("_Amount", amount);
+			material.SetFloat("_Speed", speed);
 		}
 	}
 }

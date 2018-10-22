@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GlowEffect : MonoBehaviour {
+public class BloomEffect : MonoBehaviour {
 
 	public bool on = false;
 
 	[Range(0f, 2f)]
-	public float strength = 0.5f;
+	public float strength = 0.6f;
 
 	[Range(0f, 10f)]
 	public float size = 4f;
 
 	[Range(0.00f, 0.80f)]
-	public float cutOff = 0.50f;
+	public float cutOff = 0.3f;
 
 	public Material material;
 

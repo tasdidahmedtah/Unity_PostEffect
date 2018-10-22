@@ -9,6 +9,13 @@ public class HueSaturationEffect : MonoBehaviour {
 	[Range(-1, 1)]
 	public int saturation = 0;
 
+	[Range(0, 360)]
+	public int angle = 0;
+
+	[Range(0f, 10f)]
+	public float speed = 5f;
+
+
 	public Material material;
 
 
@@ -29,6 +36,8 @@ public class HueSaturationEffect : MonoBehaviour {
 		if(on)
 		{
 			material.SetInt("_Saturation", saturation);
+			material.SetInt("_Angle", angle);
+			material.SetFloat("_Speed", speed);
 		}
 	}
 }

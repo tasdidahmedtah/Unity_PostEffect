@@ -17,6 +17,12 @@ public class ScanlinesEffect : MonoBehaviour {
 
 	[Range(0, 2f)]
 	public float noise = 0.4f;
+
+	[Range(0f, 10f)]
+	public float speed = 5f;
+
+
+
 	public Material material;
 
 
@@ -41,6 +47,7 @@ public class ScanlinesEffect : MonoBehaviour {
 			material.SetInt("_Amount", amount);
 			material.SetFloat("_Strength", strength);
 			material.SetFloat("_Noise", noise);
+			material.SetFloat("_Speed", speed);
 		}
 	}
 }

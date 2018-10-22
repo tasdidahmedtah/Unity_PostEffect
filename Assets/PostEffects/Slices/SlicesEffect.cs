@@ -9,8 +9,14 @@ public class SlicesEffect : MonoBehaviour {
 	[Range(1, 200)]
 	public int slices = 20;
 
-	[Range(0, 0.1f)]
-	public float offset = 0.05f;
+	[Range(0f, 1f)]
+	public float offset = 0.1f;
+
+	[Range(0, 1)]
+	public int vertical = 0;
+
+	[Range(0, 1)]
+	public int loop = 0;
 
 	public Material material;
 
@@ -34,6 +40,8 @@ public class SlicesEffect : MonoBehaviour {
 		{
 			material.SetInt("_Slices", slices);
 			material.SetFloat("_Offset", offset);
+			material.SetInt("_Vertical", vertical);
+			material.SetInt("_Loop", loop);
 		}
 	}
 }

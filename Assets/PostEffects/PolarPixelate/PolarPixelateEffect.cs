@@ -5,7 +5,7 @@ public class PolarPixelateEffect : MonoBehaviour {
 
 	public bool on = false;
 
-	[Range(0, 0.1f)]
+	[Range(0f, 0.3f)]
 	public float radius = 0.05f;
 
 	[Range(0, 0.1f)]

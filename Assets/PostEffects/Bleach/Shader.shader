@@ -1,7 +1,9 @@
 ﻿Shader "Custom/Shader" {
+	// 参考: http://developer.download.nvidia.com/shaderlibrary/webpages/shader_library.html#post_bleach_bypass
+
 	Properties {
-		_MainTex ("MainTex", 2D) = "" {}
-		_Strength ("Strength", Float) = 1.0
+		_MainTex ("Texture", 2D) = "" {}
+		_Strength ("Strength", float) = 1.0
 	}
 
 
@@ -17,25 +19,19 @@
 			float _Strength;
 
 
-			fixed4 frag(v2f_img i): COLOR
-			{
-
-
-				fixed4 base = tex2D(_MainTex, i.uv);
-				fixed3 lumCoeff = fixed3(0.25, 0.65, 0.1);
+			half4 frag(v2f_img img): COLOR {
+				half4 base = tex2D(_MainTex, img.uv);
+				half3 lumCoeff = half3(0.25, 0.65, 0.1);
 				float lum = dot(lumCoeff, base.rgb);
-				fixed3 blend = fixed3(lum, lum, lum);
+				half3 blend = half3(lum, lum, lum);
 				float L = min(1.0, max(0.0, 10.0 * (lum - 0.45)));
-				fixed3 result1 = 2.0 * base.rgb * blend;
-				fixed3 result2 = 1.0 - 2.0 * (1.0 - blend) * (1.0 - base.rgb);
-				fixed3 newColor = lerp(result1, result2, L);
+				half3 result1 = 2.0 * base.rgb * blend;
+				half3 result2 = 1.0 - 2.0 * (1.0 - blend) * (1.0 - base.rgb);
+				half3 newColor = lerp(result1, result2, L);
 				float A2 = _Strength * base.a;
-				fixed3 mixRGB = A2 * newColor.rgb;
-
+				half3 mixRGB = A2 * newColor.rgb;
 				mixRGB += ((1.0 - A2) * base.rgb);
-
-				fixed4 c = fixed4(mixRGB.r, mixRGB.g, mixRGB.b, base.a);
-				return c;
+				return half4(mixRGB.r, mixRGB.g, mixRGB.b, base.a);
 			}
 			ENDCG
 		}

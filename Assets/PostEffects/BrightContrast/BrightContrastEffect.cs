@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RGBShiftEffect : MonoBehaviour {
-
+public class BrightContrastEffect : MonoBehaviour {
 
 	public bool on = false;
 
-	[Range(0f, 0.1f)]
-	public float amount = 0.05f;
+	[Range(-150, 150)]
+	public int brightness = 0;
 
-	[Range(0f, 10f)]
-	public float speed = 5f;
+	[Range(-50, 100)]
+	public int contrast = 0;
+
 
 	public Material material;
-
 
 
 	void OnRenderImage(RenderTexture src, RenderTexture dest)
@@ -30,12 +29,11 @@ public class RGBShiftEffect : MonoBehaviour {
 	}
 
 
-	void Update()
-	{
+	void Update () {
 		if(on)
 		{
-			material.SetFloat("_Amount", amount);
-			material.SetFloat("_Speed", speed);
+			material.SetInt("_Brightness", brightness);
+			material.SetInt("_Contrast", contrast);
 		}
 	}
 }

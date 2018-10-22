@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ContrastEffect : MonoBehaviour {
-
+public class EmbossEffect : MonoBehaviour {
 	public bool on = false;
 
-
-	[Range(0.00f, 1.00f)]
-	public float amount = 0.30f;
+	// [Range(0.1f, 1f)]
+	// public float scale = 0.8f;
 
 	public Material material;
 
@@ -26,10 +24,11 @@ public class ContrastEffect : MonoBehaviour {
 	}
 
 
-	void Update () {
+	void Update()
+	{
 		if(on)
 		{
-			material.SetFloat("_Amount", amount);
+			// material.SetFloat("_Scale", scale);
 		}
 	}
 }

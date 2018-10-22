@@ -23,7 +23,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _Amount: 73
+    - _Blur: 0.01
     - _Glossiness: 0.5
     - _Metallic: 0
+    - _Size: 0.67
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}

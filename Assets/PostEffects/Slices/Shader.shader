@@ -1,56 +1,69 @@
 ﻿Shader "Custom/Shader" {
 	Properties {
-        _MainTex("MainTex", 2D) = ""{}
-		_Slices("Slices", Int) = 20
-		_Offset("Offset", Float) = 0.05
+        _MainTex ("Texture", 2D) = ""{}
+		_Slices ("Slices", int) = 20
+		_Offset ("Offset", float) = 0.05
+		_Vertical ("Vertical", int) = 0
+		_Loop ("Loop", Int) = 0
 	}
 
 
 	SubShader {
 		Pass {
 			CGPROGRAM
-
-			// 定義済みヘルパー関数インクルード
 			#include "UnityCG.cginc"
-
-			// 定義されている頂点シェーダー関数
 			#pragma vertex vert_img
-			// フラグメントシェーダー関数
 			#pragma fragment frag
 
+
 			sampler2D _MainTex;
-			float _Slices;
+			int _Slices;
 			float _Offset;
-			// float4 _Time;
+			int _Vertical;
+			int _Loop;
 
 
-			float fract(float x)
-			{
-				return x - floor(x);
+			// randomNoise: ランダムノイズ
+			// 参考: http://qiita.com/shimacpyon/items/d15dee44a0b8b3883f76
+			float randomNoise (half2 p){
+            	return frac(sin(dot(p, half2(12.9898, 78.233))) * 43758.5453);
+        	}
+
+
+			half4 frag(v2f_img img): COLOR{
+				// 動かす向木に合わせた変数をセット
+				float slice;
+				float offset;
+				if(_Vertical == 0){
+					slice = img.uv.y;
+					offset = img.uv.x;
+				} else {
+					slice = img.uv.x;
+					offset = img.uv.y;
+				}
+
+				// 分割位置
+				float split = floor(slice * _Slices) / _Slices;
+				// ランダム数生成
+				float ran = randomNoise(half2(_Slices, split));
+				// 時間軸を使用するか
+				float time = _Loop == 0 ? 1.0 : _Time.x * 5.0;
+
+				// 指導位置の追加
+				offset += sin(time * ran) * _Offset;
+				// 少数部をセット
+				offset = frac(offset);
+
+				// uv座標セット
+				if(_Vertical == 0){
+					img.uv.x = offset;
+					// img.uv = half2(offset, slice);
+				} else {
+					img.uv.y = offset;
+				}
+
+				return tex2D(_MainTex, img.uv);
 			}
-
-
-			float rand(fixed2 co)
-			{
-				fixed2 v2 = fixed2(12.9898, 78.233);
-				return fract(sin(dot(co.xy , v2)) * 43758.5453);
-			}
-
-
-			fixed4 frag(v2f_img i): COLOR
-			{
-				fixed2 p = i.uv;
-				float yInt = floor(i.uv.y * _Slices) / _Slices;
-				float rnd = rand(fixed2(yInt, yInt));
-
-				p.x += sin((_Time.y*10.0) * rnd / 5.0) * _Offset - _Offset / 2.0;
-				p.x = fract(p.x);
-
-				fixed4 c = tex2D(_MainTex, p);
-				// fixed4 c = tex2D(_MainTex, i.uv);
-				return c;
-			}
-
 			ENDCG
 		}
 	}

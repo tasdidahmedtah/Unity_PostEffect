@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MosaicEffect : MonoBehaviour {
+public class PixcelateEffect : MonoBehaviour {
 
 	public bool on = false;
 
-	[Range(0, 200)]
+	[Range(1, 200)]
 	public int horizontal = 20;
 
-	[Range(0, 200)]
+	[Range(1, 200)]
 	public int vertical = 20;
 
 	public Material material;

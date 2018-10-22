@@ -24,8 +24,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Glossiness: 0.5
+    - _Loop: 1
     - _Metallic: 0
-    - _Offset: 0.05
+    - _Offset: 0.55
+    - _Random: 1
     - _Slices: 20
+    - _Sway: 0
+    - _Vertical: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
